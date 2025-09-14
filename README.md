@@ -1,7 +1,10 @@
 # shelf-docker
 A clean, minimal Docker deployment package for Shelf originally by @barrowclift. This directory contains only the essential files needed to run the application.
 
+<img width="1053" height="762" alt="image" src="https://github.com/user-attachments/assets/e1121347-3cbd-4832-bed2-c97a65e1e3bf" />
+
 ## Quick Start
+**Pre-requisites:** git, docker, docker-compose should be installed prior to installation.
 
 1. **Clone this repository:**
    ```bash
@@ -95,6 +98,11 @@ For issues or questions, check the application logs and raise a github issue.
 ```bash
 docker-compose logs shelf
 ```
+**Reverse Proxy**
+Tested with NGINX Proxy Manager, works without socket-support, but you can enable it if you want.
+
+**CloudFlare Tunnels**
+If you'd like to publish this, deploy a cloudflared tunnel, and proxy to ip:3008 or whatever port you've selected. Example: [https://shelf.timothyduong.me](https://shelf.timothyduong.me)
 
 ---
 **Version**: 1.0  
