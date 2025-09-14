@@ -1,0 +1,161 @@
+<li class="board-game"
+    v-bind:class="{ 'threeDBox': experimentalBoardGameBoxRendering }"
+    v-for="boardGame in sortedAndSearchedBoardGames"
+    :key="boardGame._id"
+    :data-id="boardGame._id">
+
+    <component v-if="experimentalBoardGameBoxRendering" is="style" type="text/css">
+        .board-game[data-id="${ boardGame._id }"] .box-wrapper {
+            perspective: ${ boardGame.dimensionTiers.tiny.perspective }vw;
+            perspective-origin: 50% ${ boardGame.dimensionTiers.tiny.xCenterBaseDimension }vw;
+        }
+        .board-game[data-id="${ boardGame._id }"] .box-faces  {
+            width: ${ boardGame.dimensionTiers.tiny.baseDimension }vw;
+            height: ${ boardGame.dimensionTiers.tiny.baseDimension }vw;
+        }
+        .board-game[data-id="${ boardGame._id }"] .box-face--is-front {
+            width: ${ boardGame.dimensionTiers.tiny.width }vw;
+            height: ${ boardGame.dimensionTiers.tiny.height }vw;
+        }
+        .board-game[data-id="${ boardGame._id }"] .box-face--is-left {
+            width: ${ boardGame.dimensionTiers.tiny.halfSmallestSide }vw;
+            height: ${ boardGame.dimensionTiers.tiny.height }vw;
+        }
+        .board-game[data-id="${ boardGame._id }"] .box-face--is-top {
+            width: ${ boardGame.dimensionTiers.tiny.width }vw;
+            height: ${ boardGame.dimensionTiers.tiny.halfSmallestSide }vw;
+        }
+
+        .board-game[data-id="${ boardGame._id }"] .box-face--is-top {
+            transform: rotateX(-90deg) translateY(-${ boardGame.dimensionTiers.tiny.xCenterBaseDimension }vw) translateX(${ boardGame.dimensionTiers.tiny.xPadding }vw) translateZ(${ boardGame.dimensionTiers.tiny.yPadding }vw);
+        }
+        .board-game[data-id="${ boardGame._id }"] .box-face--is-left {
+            transform: rotateY(270deg) translateX(${ boardGame.dimensionTiers.tiny.xWidthStart }vw) translateZ(-${ boardGame.dimensionTiers.tiny.xPadding }vw) translateY(${ boardGame.dimensionTiers.tiny.yPadding }vw);
+        }
+        .board-game[data-id="${ boardGame._id }"] .box-face--is-front {
+            transform: translateZ(${ boardGame.dimensionTiers.tiny.xCenterBaseDimension }vw) translateX(${ boardGame.dimensionTiers.tiny.xPadding }vw) translateY(${ boardGame.dimensionTiers.tiny.yPadding }vw);
+        }
+        @media (min-width: 525px) {
+            .board-game[data-id="${ boardGame._id }"] .box-wrapper {
+                perspective: ${ boardGame.dimensionTiers.small.perspective }vw;
+                perspective-origin: 50% ${ boardGame.dimensionTiers.small.xCenterBaseDimension }vw;
+            }
+            .board-game[data-id="${ boardGame._id }"] .box-faces  {
+                width: ${ boardGame.dimensionTiers.small.baseDimension }vw;
+                height: ${ boardGame.dimensionTiers.small.baseDimension }vw;
+            }
+            .board-game[data-id="${ boardGame._id }"] .box-face--is-front {
+                width: ${ boardGame.dimensionTiers.small.width }vw;
+                height: ${ boardGame.dimensionTiers.small.height }vw;
+            }
+            .board-game[data-id="${ boardGame._id }"] .box-face--is-left {
+                width: ${ boardGame.dimensionTiers.small.halfSmallestSide }vw;
+                height: ${ boardGame.dimensionTiers.small.height }vw;
+            }
+            .board-game[data-id="${ boardGame._id }"] .box-face--is-top {
+                width: ${ boardGame.dimensionTiers.small.width }vw;
+                height: ${ boardGame.dimensionTiers.small.halfSmallestSide }vw;
+            }
+
+            .board-game[data-id="${ boardGame._id }"] .box-face--is-top {
+                transform: rotateX(-90deg) translateY(-${ boardGame.dimensionTiers.small.xCenterBaseDimension }vw) translateX(${ boardGame.dimensionTiers.small.xPadding }vw) translateZ(${ boardGame.dimensionTiers.small.yPadding }vw);
+            }
+            .board-game[data-id="${ boardGame._id }"] .box-face--is-left {
+                transform: rotateY(270deg) translateX(${ boardGame.dimensionTiers.small.xWidthStart }vw) translateZ(-${ boardGame.dimensionTiers.small.xPadding }vw) translateY(${ boardGame.dimensionTiers.small.yPadding }vw);
+            }
+            .board-game[data-id="${ boardGame._id }"] .box-face--is-front {
+                transform: translateZ(${ boardGame.dimensionTiers.small.xCenterBaseDimension }vw) translateX(${ boardGame.dimensionTiers.small.xPadding }vw) translateY(${ boardGame.dimensionTiers.small.yPadding }vw);
+            }
+        }
+        @media (min-width: 700px) {
+            .board-game[data-id="${ boardGame._id }"] .box-wrapper {
+                perspective: ${ boardGame.dimensionTiers.medium.perspective }vw;
+                perspective-origin: 50% ${ boardGame.dimensionTiers.medium.xCenterBaseDimension }vw;
+            }
+            .board-game[data-id="${ boardGame._id }"] .box-faces  {
+                width: ${ boardGame.dimensionTiers.medium.baseDimension }vw;
+                height: ${ boardGame.dimensionTiers.medium.baseDimension }vw;
+            }
+            .board-game[data-id="${ boardGame._id }"] .box-face--is-front {
+                width: ${ boardGame.dimensionTiers.medium.width }vw;
+                height: ${ boardGame.dimensionTiers.medium.height }vw;
+            }
+            .board-game[data-id="${ boardGame._id }"] .box-face--is-left {
+                width: ${ boardGame.dimensionTiers.medium.halfSmallestSide }vw;
+                height: ${ boardGame.dimensionTiers.medium.height }vw;
+            }
+            .board-game[data-id="${ boardGame._id }"] .box-face--is-top {
+                width: ${ boardGame.dimensionTiers.medium.width }vw;
+                height: ${ boardGame.dimensionTiers.medium.halfSmallestSide }vw;
+            }
+            .board-game[data-id="${ boardGame._id }"] .box-face {
+                box-shadow: inset 0px 0px ${ boardGame.dimensionTiers.medium.xCenterWidth }vw rgba(0, 0, 0, 0.1);
+            }
+            .board-game[data-id="${ boardGame._id }"] .box-face--is-top {
+                transform: rotateX(-90deg) translateY(-${ boardGame.dimensionTiers.medium.xCenterBaseDimension }vw) translateX(${ boardGame.dimensionTiers.medium.xPadding }vw) translateZ(${ boardGame.dimensionTiers.medium.yPadding }vw);
+            }
+            .board-game[data-id="${ boardGame._id }"] .box-face--is-left {
+                transform: rotateY(270deg) translateX(${ boardGame.dimensionTiers.medium.xWidthStart }vw) translateZ(-${ boardGame.dimensionTiers.medium.xPadding }vw) translateY(${ boardGame.dimensionTiers.medium.yPadding }vw);
+            }
+            .board-game[data-id="${ boardGame._id }"] .box-face--is-front {
+                transform: translateZ(${ boardGame.dimensionTiers.medium.xCenterBaseDimension }vw) translateX(${ boardGame.dimensionTiers.medium.xPadding }vw) translateY(${ boardGame.dimensionTiers.medium.yPadding }vw);
+            }
+        }
+        @media (min-width: 1000px) {
+            .board-game[data-id="${ boardGame._id }"] .box-wrapper {
+                perspective: ${ boardGame.dimensionTiers.large.perspective }em;
+                perspective-origin: 50% ${ boardGame.dimensionTiers.large.xCenterBaseDimension }em;
+            }
+            .board-game[data-id="${ boardGame._id }"] .box-faces  {
+                width: ${ boardGame.dimensionTiers.large.baseDimension }em;
+                height: ${ boardGame.dimensionTiers.large.baseDimension }em;
+            }
+            .board-game[data-id="${ boardGame._id }"] .box-face--is-front {
+                width: ${ boardGame.dimensionTiers.large.width }em;
+                height: ${ boardGame.dimensionTiers.large.height }em;
+            }
+            .board-game[data-id="${ boardGame._id }"] .box-face--is-left {
+                width: ${ boardGame.dimensionTiers.large.halfSmallestSide }em;
+                height: ${ boardGame.dimensionTiers.large.height }em;
+            }
+            .board-game[data-id="${ boardGame._id }"] .box-face--is-top {
+                width: ${ boardGame.dimensionTiers.large.width }em;
+                height: ${ boardGame.dimensionTiers.large.halfSmallestSide }em;
+            }
+
+            .board-game[data-id="${ boardGame._id }"] .box-face--is-top {
+                transform: rotateX(-90deg) translateY(-${ boardGame.dimensionTiers.large.xCenterBaseDimension }em) translateX(${ boardGame.dimensionTiers.large.xPadding }em) translateZ(${ boardGame.dimensionTiers.large.yPadding }em);
+            }
+            .board-game[data-id="${ boardGame._id }"] .box-face--is-left {
+                transform: rotateY(270deg) translateX(${ boardGame.dimensionTiers.large.xWidthStart }em) translateZ(-${ boardGame.dimensionTiers.large.xPadding }em) translateY(${ boardGame.dimensionTiers.large.yPadding }em);
+            }
+            .board-game[data-id="${ boardGame._id }"] .box-face--is-front {
+                transform: translateZ(${ boardGame.dimensionTiers.large.xCenterBaseDimension }em) translateX(${ boardGame.dimensionTiers.large.xPadding }em) translateY(${ boardGame.dimensionTiers.large.yPadding }em);
+            }
+        }
+    </component>
+
+    <a :href="boardGame.boardGameGeekUrl">
+        <div v-if="experimentalBoardGameBoxRendering" class="shadow-and-box-wrapper">
+            <div class="box-wrapper">
+                <div class="box-faces">
+                    <div class="box-face box-face--is-front" :style="{ 'background-color': boardGame.styles.frontAndBackHsl }">
+                        <img style="width:100%;" :src='boardGame.coverArtFilePath' :alt='boardGame.title'>
+                    </div>
+                    <div class="box-face box-face--is-top" :style="{ 'background-color': boardGame.styles.topHsl }">&nbsp;</div>
+                    <div class="box-face box-face--is-left" :style="{ 'background-color': boardGame.styles.leftAndRightHsl }">&nbsp;</div>
+                </div>
+            </div>
+        </div>
+        <div v-else>
+            <div data-tilt data-tilt-scale="1.05" data-tilt-glare data-tilt-reverse="false" data-tilt-max-glare="0.5" class="wrapper">
+                <div class="center">
+                    <img class="shadow art" :src='boardGame.coverArtFilePath' :alt='boardGame.title'>
+                </div>
+            </div>
+        </div>
+        <div class="metadata">
+            <p class="title">${ boardGame.title }</p>
+        </div>
+    </a>
+</li>

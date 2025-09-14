@@ -1,0 +1,81 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: shelf-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-shelf_db}
+      POSTGRES_USER: ${POSTGRES_USER:-shelf_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-shelf_password}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - shelf-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-shelf_user} -d ${POSTGRES_DB:-shelf_db}"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  shelf:
+    build: .
+    container_name: shelf-docker
+    restart: unless-stopped
+    ports:
+      - "3008:3008"
+    environment:
+      # Database configuration
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=${POSTGRES_DB:-shelf_db}
+      - POSTGRES_USER=${POSTGRES_USER:-shelf_user}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-shelf_password}
+      
+      # Application configuration
+      - PORT=3008
+      - NODE_ENV=${NODE_ENV:-production}
+      - SITE_TITLE=${SITE_TITLE:-Shelf}
+      - PUBLIC_URL=${PUBLIC_URL:-http://localhost:3008}
+      
+      # External service configuration
+      - DISCOGS_USER_TOKEN=${DISCOGS_USER_TOKEN:-}
+      - DISCOGS_USER_ID=${DISCOGS_USER_ID:-}
+      - BOARDGAMEGEEK_USER_ID=${BOARDGAMEGEEK_USER_ID:-}
+      
+      # Feature toggles
+      - RECORD_SHELF_ENABLED=${RECORD_SHELF_ENABLED:-true}
+      - BOARDGAME_SHELF_ENABLED=${BOARDGAME_SHELF_ENABLED:-true}
+      - BOOK_SHELF_ENABLED=${BOOK_SHELF_ENABLED:-false}
+      
+      # API settings
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+      - REFRESH_FREQUENCY_IN_MINUTES=${REFRESH_FREQUENCY_IN_MINUTES:-15}
+      - REQUEST_TIMEOUT_IN_SECONDS=${REQUEST_TIMEOUT_IN_SECONDS:-5}
+      - MAX_ART_SIZE=${MAX_ART_SIZE:-400}
+      
+      # Image cache
+      - IMAGE_CACHE_PATH=/app/public/images
+      
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - shelf-network
+    volumes:
+      - image_cache:/app/public/images
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"require('http').get('http://localhost:3008/health', (res) => { process.exit(res.statusCode === 200 ? 0 : 1) }).on('error', () => process.exit(1))\""]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+volumes:
+  postgres_data:
+    driver: local
+  image_cache:
+    driver: local
+
+networks:
+  shelf-network:
+    driver: bridge

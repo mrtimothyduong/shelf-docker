@@ -1,0 +1,39 @@
+{
+  "name": "shelf-v2",
+  "version": "2.0.0",
+  "type": "module",
+  "description": "Beautifully display your library on the Internet - v2 with PostgreSQL",
+  "main": "src/app.js",
+  "private": true,
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "node --watch src/app.js",
+    "db:migrate": "node src/database/migrate.js",
+    "db:migration": "node src/database/runMigration.js",
+    "clean:images": "node scripts/cleanImageCache.js",
+    "clean:images:dry": "node scripts/cleanImageCache.js --dry-run",
+    "sync:manual": "node scripts/manualSync.js",
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "author": "Shelf v2",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2",
+    "pg": "^8.11.3",
+    "liquidjs": "^10.14.0",
+    "node-fetch": "^3.3.2",
+    "compression": "^1.7.4",
+    "sharp": "^0.33.4",
+    "xml-js": "^1.6.11",
+    "dotenv": "^16.4.5",
+    "socket.io": "^4.7.5",
+    "fuse.js": "^7.0.0",
+    "helmet": "^7.0.0",
+    "express-rate-limit": "^7.0.0",
+    "express-validator": "^7.0.0",
+    "winston": "^3.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en-US" prefix="og: http://ogp.me/ns#">
+
+    {% include "head" %}
+
+    <body>
+        <div id="wrap">
+
+            {% include "header" %}
+
+            <div id="browserSupported" class="content clearfix">
+                <div class="writing">
+                    <h1 id="acknowledgements">Acknowledgements</h1>
+                    <p>Shelf would not exist without the data provided by these fine sites:</p>
+                    <ul>
+                        <li><a href="https://boardgamegeek.com">BoardGameGeek</a>: Board game data source</li>
+                        <li><a href="https://www.discogs.com">Discogs</a>: Record data source
+                            <ul>
+                                <li>Apple&rsquo;s <a href="https://affiliate.itunes.apple.com/resources/documentation/itunes-store-web-service-search-api/">iTunes Search API</a>: Primary record cover art source</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <p>Many thanks to the following individuals:</p>
+                    <ul>
+                        <li><a href="https://gmigdos.wordpress.com/author/cyberpython/">George</a>, for his <a href="https://gmigdos.wordpress.com/2011/01/13/javascript-convert-rgb-values-to-hsl/">clever solution</a> to convert RGB values to the HSL colorspace</li>
+                        <li><a href="https://davidwalsh.name">David Walsh</a>, for his <a href="https://davidwalsh.name/css-cube">3D CSS cube</a> which proved the base for Shelf's experimental 3D board game rendering style</li>
+                        <li><a href="https://meyerweb.com/ui/about.html">Eric A. Meyer</a>, for his legendary <a href="https://meyerweb.com/eric/tools/css/reset/">reset stylesheet</a></li>
+                    </ul>
+                    <p>Finally, Shelf was built using the following projects:</p>
+                    <ul>
+                        <li><a href="http://expressjs.com">Express.js</a> web application framework</li>
+                        <li><a href="https://fusejs.io">Fuse.js</a> fuzzy-search library</li>
+                        <li><a href="https://github.com/AvianFlu/ncp">ncp</a> asynchronous recursive file copying with Node.js</li>
+                        <li><a href="https://github.com/bartve/disconnect">disconnect</a> Discogs client for Node.js</li>
+                        <li><a href="https://github.com/expressjs/compression">Compression</a> node middleware</li>
+                        <li><a href="https://github.com/gagle/node-properties">properties</a> for Java <code>.properties</code> support in Node</li>
+                        <li><a href="https://github.com/lovell/sharp">Sharp</a> image processing</li>
+                        <li><a href="https://github.com/mathiasbynens/he">he</a> HTML encoder/decorder</li>
+                        <li><a href="https://github.com/nashwaan/xml-js">xml-js</a> utility for converting XML to JSON</li>
+                        <li><a href="https://github.com/node-fetch/node-fetch">node-fetch</a> light-weight Fetch API implementation for Node.js</li>
+                        <li><a href="https://socket.io">Socket.io</a> for bidirectional server and client communication</li>
+                        <li><a href="https://www.mongodb.com">MongoDB</a> as Shelf's document store</li>
+                        <li>Shopify&rsquo;s <a href="https://shopify.github.io/liquid/">Liquid</a> HTML templating language</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        {% include "footer" %}
+
+    </body>
+</html>

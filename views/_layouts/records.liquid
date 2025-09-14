@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en-US" prefix="og: http://ogp.me/ns#">
+    {% include "head" %}
+    {% include "body" %}
+    {% include "footerScripts" %}
+
+    <script type="text/javascript">
+        // Initialize records data from server
+        window.shelfRecordsData = {{ recordsJson }};
+        console.log('Records loaded:', window.shelfRecordsData.length);
+        
+        const { createApp } = Vue;
+
+        let fuzzySearchOptions = {
+            shouldSort: true,
+            includeScore: false,
+            tokenize: true,
+            matchAllTokens: true,
+            threshold: 0.1,
+            location: 0,
+            distance: 100,
+            maxPatternLength: 32,
+            minMatchCharLength: 1,
+            keys: [
+                "artist",
+                "title"
+            ]
+        };
+        sortByArtistNameAndYearOfRelease = function(recordA, recordB) {
+            if (recordA.sortArtist === recordB.sortArtist) {
+                if (recordA.yearOfOriginalRelease < recordB.yearOfOriginalRelease) {
+                    return -1;
+                } else if (recordA.yearOfOriginalRelease > recordB.yearOfOriginalRelease) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            } else {
+                return recordA.sortArtist.localeCompare(recordB.sortArtist);
+            }
+        };
+
+        /**
+         * Default to hidden, otherwise we'll temporarily "flash" it on screen even if
+         * there is no initial fetch occuring (which is the ONLY time we want to
+         * show a loading spinner). We'll instead immediately check with the server
+         * to see if there's initial fetch occurring. If there is, THEN we show it.
+         */
+        let fuse = null;
+        let recordsApp = createApp({
+            delimiters: ["${", "}"],
+            data() {
+                return {
+                    "records": window.shelfRecordsData || [],
+                    "recordCount": {{ recordCount }},
+                    "theSpinner": false,
+                    "searchString": "",
+                    initialLoadInProgress: false,
+                    documentReady: true,
+                    vueLoaded: false,
+                    loadingSpinnerVisible: false
+                }
+            },
+            computed: {
+                sortedAndSearchedRecords() {
+                    if (!this.searchString) {
+                        return this.records.sort(sortByArtistNameAndYearOfRelease);
+                    } else {
+                        if (recordsChanged) {
+                            fuse = new Fuse(this.records, fuzzySearchOptions);
+                        }
+                        return fuse.search(this.searchString).map((wrapper) => wrapper.item).sort(sortByArtistNameAndYearOfRelease);
+                    }
+                }
+            },
+            methods: {
+                getAlbumArt(record) {
+                    let imageUrl = record.coverImageUrl;
+                    
+                    // If it's a Discogs URL, proxy it with original resolution
+                    if (imageUrl && imageUrl.startsWith('https://i.discogs.com/')) {
+                        // Keep original 150x150 resolution - Discogs doesn't allow arbitrary size changes
+                        imageUrl = '/proxy-image?url=' + encodeURIComponent(imageUrl);
+                    }
+                    
+                    console.log('getAlbumArt called for:', record.title, 'URL:', imageUrl);
+                    return imageUrl;
+                }
+            },
+            updated() {
+                VanillaTilt.init(document.querySelectorAll(".wrapper"));
+            }
+        }).mount("#records");
+
+        let bufferedSearchString = "";
+        document.getElementById("search").oninput = function(event) {
+            bufferedSearchString = event.srcElement.value.trim();
+            recordsApp.searchString = bufferedSearchString;
+        };
+
+        recordsApp.vueLoaded = true;
+        recordsChanged = true; // Initialize fuse search if needed
+    </script>
+    
+    <style>
+        /* Custom sizing for better display on high-resolution screens */
+        @media (min-width: 1000px) {
+            .record {
+                width: 200px;
+            }
+            .record a .wrapper,
+            .record a:active .wrapper,
+            .record a:focus .wrapper, 
+            .record a:visited .wrapper,
+            .record .art {
+                max-width: 200px;
+                max-height: 200px;
+            }
+        }
+    </style>
+</html>
