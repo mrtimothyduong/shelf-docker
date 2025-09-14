@@ -1,6 +1,8 @@
 # shelf-docker
 A clean, minimal Docker deployment package for Shelf originally by @[barrowclift](https://barrowclift.me/). This directory contains only the essential files needed to run the application. Original Shelf (v 3.2.4 with mongoDB backend) can be found here: https://github.com/barrowclift/shelf
 
+**Demo:** https://shelf.timothyduong.me/
+
 <img width="1053" height="762" alt="image" src="https://github.com/user-attachments/assets/e1121347-3cbd-4832-bed2-c97a65e1e3bf" />
 
 ## Quick Start
