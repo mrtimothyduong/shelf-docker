@@ -3,9 +3,9 @@ A clean, minimal Docker deployment package for Shelf originally by @barrowclift.
 
 ## Quick Start
 
-1. **Copy environment file:**
+1. **Clone this repository:**
    ```bash
-   mkdir ./shelf && cd ./shelf && git https://github.com/mrtimothyduong/shelf-docker
+   git clone https://github.com/mrtimothyduong/shelf-docker && cd ./shelf-docker
    ```
 
 2. **Configure your environment:**
