@@ -67,34 +67,10 @@ shelf-docker-v1.0/
 | `SITE_TITLE` | Your shelf title | "Shelf" |
 | `LOG_LEVEL` | Logging verbosity | info |
 
-
-## Commands
-
-```bash
-# Start services
-docker-compose up -d
-
-# View logs
-docker-compose logs -f shelf
-
-# Stop services
-docker-compose down
-
-# Update application (rebuild)
-docker-compose up --build -d
-
-# Database migration (if needed)
-docker-compose exec shelf npm run db:migrate
-
-# Clean image cache
-docker-compose exec shelf npm run clean:images
-```
-
 ## Data Persistence
 
 - PostgreSQL data: `postgres_data` volume
 - Image cache: `image_cache` volume
-
 Both volumes persist data across container restarts.
 
 ## Support
